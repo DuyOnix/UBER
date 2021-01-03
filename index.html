@@ -9,8 +9,7 @@
     <!--===============================================================================================-->
     <link
       rel="stylesheet"
-      type="text/css"
-      href="vendor/bootstrap/css/bootstrap.min.css"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <!--===============================================================================================-->
     <link
@@ -57,20 +56,29 @@
           <h2>Vui lòng chọn loại xe:</h2>
           <ul>
             <li class="type">
-              <input id="uberX" type="radio" name="selector" />
+              <input id="uberX" type="radio" name="selector" value="uberX" />
               <label for="uberX">Uber X</label>
-
               <div class="check"></div>
             </li>
 
             <li class="type">
-              <input id="uberSUV" type="radio" name="selector" />
+              <input
+                id="uberSUV"
+                type="radio"
+                name="selector"
+                value="uberSUV"
+              />
               <label for="uberSUV">Uber SUV</label>
               <div class="check"></div>
             </li>
 
             <li class="type">
-              <input id="uberBlack" type="radio" name="selector" />
+              <input
+                id="uberBlack"
+                type="radio"
+                name="selector"
+                value="uberBlack"
+              />
               <label for="uberBlack">Uber Black</label>
               <div class="check"></div>
             </li>
@@ -85,10 +93,12 @@
           >
             <h2>Nhập vào số KM</h2>
             <input
+              id="distance"
               class="input100"
-              type="text"
+              type="number"
               name="name"
               placeholder="Số KM ..."
+              value=""
             />
             <span class="focus-input100"></span>
           </div>
@@ -98,36 +108,123 @@
           >
             <h2>Nhập thời gian chờ</h2>
             <input
+              id="time"
               class="input100"
-              type="text"
+              type="number"
               name="name"
               placeholder="Thời gian chờ  ..."
+              value=""
             />
             <span class="focus-input100"></span>
           </div>
 
           <div class="wrap-contact100-form-btn">
             <div class="contact100-form-bgbtn"></div>
-            <button type="button" class="contact100-form-btn">TÍNH TIỀN</button>
+            <button id="tinhTien" type="button" class="contact100-form-btn">
+              TÍNH TIỀN
+            </button>
           </div>
           <div class="wrap-contact100-form-btn">
             <div class="contact100-form-bgbtn"></div>
             <button
+              id="inHoaDon"
               type="button"
               class="contact100-form-btn"
               data-toggle="modal"
-              data-target="#exampleModal"
+              data-target="#bill"
             >
               IN HÓA ĐƠN
             </button>
           </div>
         </form>
-
         <div style="clear: both"></div>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="bill"
+          tabindex="-1"
+          aria-labelledby="billLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="billLabel">Hóa Đơn</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div id="bill" class="modal-body">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Chi tiết</th>
+                      <th>Sử dụng</th>
+                      <th>Đơn giá</th>
+                      <th>Thành tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="line_1" class="line">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+
+                    <tr id="line_2" class="line">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+
+                    <tr id="line_3" class="line">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+
+                    <tr id="line_4">
+                      <td>Thời gian chờ</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+
+                    <tr class="bg-success">
+                      <td>Total</td>
+                      <td></td>
+                      <td></td>
+                      <td id="totalBill"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div id="divThanhTien" class="dongia">
-          <h2>
+          <h2 class="alert alert-success">
             Thành tiền:
-            <span id="xuatTien" class="xuatTien"> 12345</span>
+            <span id="xuatTien" class="xuatTien"></span>
             vnd
           </h2>
         </div>
@@ -135,14 +232,16 @@
     </div>
 
     <!--===============================================================================================-->
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--===============================================================================================-->
     <script src="vendor/animsition/js/animsition.min.js"></script>
     <!--===============================================================================================-->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
     <script src="js/map-custom.js"></script>
+    <script src="./js/main.js"></script>
     <!--===============================================================================================-->
   </body>
 </html>
