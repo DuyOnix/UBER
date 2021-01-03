@@ -14,18 +14,18 @@ var pricePerTimeDelay = [2000, 3000, 4000];
 
 // END GLOBAL VARIABLES 
 
-function calculateMoney(distance, time, vehicle) {
+function calculateMoney(distance, time, vehicle, indexVehicle) {
     // 0 < Số KM <= 1
     if (distance > 0 && distance <= distanceTable[0]) {
-        money = vehicle[0] + time * pricePerTimeDelay[0];
+        money = vehicle[0] + time * pricePerTimeDelay[indexVehicle];
     }
     // 1 < Số KM <= 20
     else if (distance > distanceTable[0] && distance <= distanceTable[1]) {
-        money = vehicle[0] + (distance - distanceTable[0]) * vehicle[1] + time * pricePerTimeDelay[0];
+        money = vehicle[0] + (distance - distanceTable[0]) * vehicle[1] + time * pricePerTimeDelay[indexVehicle];
     }
     // Số KM > 20
     else {
-        money = vehicle[0] + (distanceTable[1] - distanceTable[0]) * vehicle[1] + (distance - distanceTable[1]) * vehicle[2] + time * pricePerTimeDelay[0];
+        money = vehicle[0] + (distanceTable[1] - distanceTable[0]) * vehicle[1] + (distance - distanceTable[1]) * vehicle[2] + time * pricePerTimeDelay[indexVehicle];
     }
     return money;
 }
@@ -35,15 +35,15 @@ function getMoney(car, distance, time) {
     switch (car) {
         // Truong hop chon UBER X
         case "uberX":
-            money = calculateMoney(distance, time, uberX);
+            money = calculateMoney(distance, time, uberX, 0);
             break;
         // Truong hop chon UBER SUV   
         case "uberSUV":
-            money = calculateMoney(distance, time, uberSUV);
+            money = calculateMoney(distance, time, uberSUV, 1);
             break;
         // Truong hop chon UBER Black
         case "uberBlack":
-            money = calculateMoney(distance, time, uberBlack);
+            money = calculateMoney(distance, time, uberBlack, 2);
             break;
         default:
             break;
@@ -106,7 +106,7 @@ document.getElementById("tinhTien").addEventListener("click", function () {
     document.getElementById("xuatTien").innerHTML = money;
 });
 
-function getBill(distance, time, money, vehicle) {
+function getBill(distance, time, money, vehicle, indexVehicle) {
     // In số tiền quãng đường đi được
     // 0 < Số KM <=1
     if (distance > 0 && distance <= distanceTable[0]) {
@@ -158,13 +158,18 @@ function getBill(distance, time, money, vehicle) {
     }
 
     // In số tiền khoảng thời gian chờ
+    document.getElementById("line_4").style.display = "table-row";
     var getTimeBill = document.querySelectorAll("#bill table #line_4 td");
+    getTimeBill[0].innerHTML = "Thời gian chờ";
     getTimeBill[1].innerHTML = time + " phút";
-    getTimeBill[2].innerHTML = pricePerTimeDelay[0];
-    getTimeBill[3].innerHTML = time * pricePerTimeDelay[0];
+    getTimeBill[2].innerHTML = pricePerTimeDelay[indexVehicle];
+    getTimeBill[3].innerHTML = time * pricePerTimeDelay[indexVehicle];
 
     // In tổng tiền
-    document.getElementById("totalBill").innerHTML = money;
+    document.getElementById("line_5").style.display = "table-row";
+    var getTotalBill = document.querySelectorAll("#bill table #line_5 td");
+    getTotalBill[0].innerHTML = "Total";
+    getTotalBill[3].innerHTML = money;
 }
 
 document.getElementById("inHoaDon").addEventListener("click", function () {
@@ -172,16 +177,20 @@ document.getElementById("inHoaDon").addEventListener("click", function () {
     var distance = document.getElementById("distance").value;
     var time = document.getElementById("time").value;
     var money = getMoney(car, distance, time);
+    if (money == 0) {
+        alert("Vui lòng TÍNH TIỀN trước khi in hóa đơn");
+        return;
+    }
     switch (car) {
         case "uberX":
-            getBill(distance, time, money, uberX);
+            getBill(distance, time, money, uberX, 0);
             break;
 
         case "uberSUV":
-            getBill(distance, time, money, uberSUV);
+            getBill(distance, time, money, uberSUV, 1);
             break;
         case "uberBlack":
-            getBill(distance, time, money, uberBlack);
+            getBill(distance, time, money, uberBlack, 2);
             break;
         default:
             break;
