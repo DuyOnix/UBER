@@ -547,3 +547,16 @@ input[type="radio"]:checked ~ label {
 .line {
   display: none;
 }
+
+#warn-km p,
+#warn-time p {
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+}
+
+#line_5 {
+  background-color: #58b865;
+  color: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+}
