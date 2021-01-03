@@ -17,7 +17,7 @@ var pricePerTimeDelay = [2000, 3000, 4000];
 function calculateMoney(distance, time, vehicle, indexVehicle) {
     // 0 < Số KM <= 1
     if (distance > 0 && distance <= distanceTable[0]) {
-        money = vehicle[0] + time * pricePerTimeDelay[indexVehicle];
+        money = distance * vehicle[0] + time * pricePerTimeDelay[indexVehicle];
     }
     // 1 < Số KM <= 20
     else if (distance > distanceTable[0] && distance <= distanceTable[1]) {
@@ -185,7 +185,6 @@ document.getElementById("inHoaDon").addEventListener("click", function () {
         case "uberX":
             getBill(distance, time, money, uberX, 0);
             break;
-
         case "uberSUV":
             getBill(distance, time, money, uberSUV, 1);
             break;
