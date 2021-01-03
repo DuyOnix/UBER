@@ -86,7 +86,7 @@ document.getElementById("tinhTien").addEventListener("click", function () {
         alert("Vui lòng nhập vào thời gian chờ");
         return;
     }
-    if (distance <= 0 && time <= 0) {
+    if (distance <= 0 && time < 0) {
         document.getElementById("warn-km").style.display = "block";
         document.getElementById("warn-time").style.display = "block";
         return;
@@ -95,7 +95,7 @@ document.getElementById("tinhTien").addEventListener("click", function () {
         document.getElementById("warn-km").style.display = "block";
         return;
     }
-    else if (time <= 0) {
+    else if (time < 0) {
         document.getElementById("warn-time").style.display = "block";
         return;
     }
@@ -177,10 +177,40 @@ document.getElementById("inHoaDon").addEventListener("click", function () {
     var distance = document.getElementById("distance").value;
     var time = document.getElementById("time").value;
     var money = getMoney(car, distance, time);
+    // Set warning input
+    document.getElementById("warn-km").style.display = "none";
+    document.getElementById("warn-time").style.display = "none";
+    // Test input
     if (money == 0) {
         alert("Vui lòng TÍNH TIỀN trước khi in hóa đơn");
         return;
     }
+    if (car == "") {
+        alert("Vui lòng chọn loại xe");
+        return;
+    }
+    if (distance == "") {
+        alert("Vui lòng nhập vào số KM");
+        return;
+    }
+    if (time == "") {
+        alert("Vui lòng nhập vào thời gian chờ");
+        return;
+    }
+    if (distance <= 0 && time < 0) {
+        document.getElementById("warn-km").style.display = "block";
+        document.getElementById("warn-time").style.display = "block";
+        return;
+    }
+    else if (distance <= 0) {
+        document.getElementById("warn-km").style.display = "block";
+        return;
+    }
+    else if (time < 0) {
+        document.getElementById("warn-time").style.display = "block";
+        return;
+    }
+    // END Test input
     switch (car) {
         case "uberX":
             getBill(distance, time, money, uberX, 0);
