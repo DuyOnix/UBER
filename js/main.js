@@ -11,7 +11,8 @@ var distanceTable = [1, 20];
 // Khoảng cách tối đa cho một gói cước được áp dụng
 var pricePerTimeDelay = [2000, 3000, 4000];
 // Số tiền trung bình mỗi phút chờ lần lượt của UBER X, UBER SUV, UBER Black
-
+var check = false;
+// Kiểm tra tính tiền 
 // END GLOBAL VARIABLES 
 
 function calculateMoney(distance, time, vehicle, indexVehicle) {
@@ -102,67 +103,61 @@ document.getElementById("tinhTien").addEventListener("click", function () {
         return;
     }
     // END Test input
-
+    check = true; // Đã tính tiền
     var money = getMoney(car, distance, time);
     document.getElementById("divThanhTien").style.display = "block";
     document.getElementById("xuatTien").innerHTML = money;
 });
 
 function getBill(distance, time, money, vehicle, indexVehicle) {
-    // SET line
-    document.getElementById("line_1").style.display = "none";
-    document.getElementById("line_2").style.display = "none";
-    document.getElementById("line_3").style.display = "none";
-    document.getElementById("line_4").style.display = "none";
-    document.getElementById("line_5").style.display = "none";
     // In số tiền quãng đường đi được
     // 0 < Số KM <=1
     if (distance > 0 && distance <= distanceTable[0]) {
         document.getElementById("line_1").style.display = "table-row";
-        var getFirstLine = document.querySelectorAll("#bill table #line_1 td");
-        getFirstLine[0].innerHTML = ubers[0];
-        getFirstLine[1].innerHTML = distance + " km";
-        getFirstLine[2].innerHTML = vehicle[0];
-        getFirstLine[3].innerHTML = distance * vehicle[0];
+        var getLine = document.querySelectorAll("#bill table #line_1 td");
+        getLine[0].innerHTML = ubers[0];
+        getLine[1].innerHTML = distance + " km";
+        getLine[2].innerHTML = vehicle[0];
+        getLine[3].innerHTML = distance * vehicle[0];
     }
     // 1 < Số KM <= 20
     else if (distance > distanceTable[0] && distance <= distanceTable[1]) {
         document.getElementById("line_1").style.display = "table-row";
-        var getFirstLine = document.querySelectorAll("#bill table #line_1 td");
-        getFirstLine[0].innerHTML = ubers[0];
-        getFirstLine[1].innerHTML = distanceTable[0] + " km";
-        getFirstLine[2].innerHTML = vehicle[0];
-        getFirstLine[3].innerHTML = distanceTable[0] * vehicle[0];
+        var getLine = document.querySelectorAll("#bill table #line_1 td");
+        getLine[0].innerHTML = ubers[0];
+        getLine[1].innerHTML = distanceTable[0] + " km";
+        getLine[2].innerHTML = vehicle[0];
+        getLine[3].innerHTML = distanceTable[0] * vehicle[0];
 
         document.getElementById("line_2").style.display = "table-row";
-        var getFirstLine = document.querySelectorAll("#bill table #line_2 td");
-        getFirstLine[0].innerHTML = ubers[0];
-        getFirstLine[1].innerHTML = distance - distanceTable[0] + " km";
-        getFirstLine[2].innerHTML = vehicle[1];
-        getFirstLine[3].innerHTML = (distance - distanceTable[0]) * vehicle[1];
+        var getLine = document.querySelectorAll("#bill table #line_2 td");
+        getLine[0].innerHTML = ubers[0];
+        getLine[1].innerHTML = distance - distanceTable[0] + " km";
+        getLine[2].innerHTML = vehicle[1];
+        getLine[3].innerHTML = (distance - distanceTable[0]) * vehicle[1];
     }
     // Số KM > 20
     else {
         document.getElementById("line_1").style.display = "table-row";
-        var getFirstLine = document.querySelectorAll("#bill table #line_1 td");
-        getFirstLine[0].innerHTML = ubers[0];
-        getFirstLine[1].innerHTML = distanceTable[0] + " km";
-        getFirstLine[2].innerHTML = vehicle[0];
-        getFirstLine[3].innerHTML = distanceTable[0] * vehicle[0];
+        var getLine = document.querySelectorAll("#bill table #line_1 td");
+        getLine[0].innerHTML = ubers[0];
+        getLine[1].innerHTML = distanceTable[0] + " km";
+        getLine[2].innerHTML = vehicle[0];
+        getLine[3].innerHTML = distanceTable[0] * vehicle[0];
 
         document.getElementById("line_2").style.display = "table-row";
-        var getFirstLine = document.querySelectorAll("#bill table #line_2 td");
-        getFirstLine[0].innerHTML = ubers[0];
-        getFirstLine[1].innerHTML = distanceTable[1] - distanceTable[0] + " km";
-        getFirstLine[2].innerHTML = vehicle[1];
-        getFirstLine[3].innerHTML = (distanceTable[1] - distanceTable[0]) * vehicle[1];
+        var getLine = document.querySelectorAll("#bill table #line_2 td");
+        getLine[0].innerHTML = ubers[0];
+        getLine[1].innerHTML = distanceTable[1] - distanceTable[0] + " km";
+        getLine[2].innerHTML = vehicle[1];
+        getLine[3].innerHTML = (distanceTable[1] - distanceTable[0]) * vehicle[1];
 
         document.getElementById("line_3").style.display = "table-row";
-        var getFirstLine = document.querySelectorAll("#bill table #line_3 td");
-        getFirstLine[0].innerHTML = ubers[0];
-        getFirstLine[1].innerHTML = distance - distanceTable[1] + " km";
-        getFirstLine[2].innerHTML = vehicle[2];
-        getFirstLine[3].innerHTML = (distance - distanceTable[1]) * vehicle[2];
+        var getLine = document.querySelectorAll("#bill table #line_3 td");
+        getLine[0].innerHTML = ubers[0];
+        getLine[1].innerHTML = distance - distanceTable[1] + " km";
+        getLine[2].innerHTML = vehicle[2];
+        getLine[3].innerHTML = (distance - distanceTable[1]) * vehicle[2];
     }
 
     // In số tiền khoảng thời gian chờ
@@ -188,37 +183,19 @@ document.getElementById("inHoaDon").addEventListener("click", function () {
     // Set warning input
     document.getElementById("warn-km").style.display = "none";
     document.getElementById("warn-time").style.display = "none";
+    // SET line
+    document.getElementById("line_1").style.display = "none";
+    document.getElementById("line_2").style.display = "none";
+    document.getElementById("line_3").style.display = "none";
+    document.getElementById("line_4").style.display = "none";
+    document.getElementById("line_5").style.display = "none";
     // Test input
-    if (money == 0) {
+    if (!check) {
         alert("Vui lòng TÍNH TIỀN trước khi in hóa đơn");
         return;
     }
-    if (car == "") {
-        alert("Vui lòng chọn loại xe");
-        return;
-    }
-    if (distance == "") {
-        alert("Vui lòng nhập vào số KM");
-        return;
-    }
-    if (time == "") {
-        alert("Vui lòng nhập vào thời gian chờ");
-        return;
-    }
-    if (distance <= 0 && time < 0) {
-        document.getElementById("warn-km").style.display = "block";
-        document.getElementById("warn-time").style.display = "block";
-        return;
-    }
-    else if (distance <= 0) {
-        document.getElementById("warn-km").style.display = "block";
-        return;
-    }
-    else if (time < 0) {
-        document.getElementById("warn-time").style.display = "block";
-        return;
-    }
-    // END Test input
+    // End Test Input
+    check = false; // Đặt lại mặc định là chưa tính tiền
     switch (car) {
         case "uberX":
             getBill(distance, time, money, uberX, 0);
