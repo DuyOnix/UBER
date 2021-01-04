@@ -547,9 +547,3 @@ input[type="radio"]:checked ~ label {
 .line {
   display: none;
 }
-
-#warn-km p,
-#warn-time p {
-  font-size: 20px;
-  font-weight: 600;
-}

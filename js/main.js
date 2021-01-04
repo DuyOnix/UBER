@@ -15,6 +15,7 @@ var pricePerTimeDelay = [2000, 3000, 4000];
 // END GLOBAL VARIABLES 
 
 function calculateMoney(distance, time, vehicle, indexVehicle) {
+    var money = 0;
     // 0 < Số KM <= 1
     if (distance > 0 && distance <= distanceTable[0]) {
         money = distance * vehicle[0] + time * pricePerTimeDelay[indexVehicle];
@@ -107,6 +108,12 @@ document.getElementById("tinhTien").addEventListener("click", function () {
 });
 
 function getBill(distance, time, money, vehicle, indexVehicle) {
+    // SET line
+    document.getElementById("line_1").style.display = "none";
+    document.getElementById("line_2").style.display = "none";
+    document.getElementById("line_3").style.display = "none";
+    document.getElementById("line_4").style.display = "none";
+    document.getElementById("line_5").style.display = "none";
     // In số tiền quãng đường đi được
     // 0 < Số KM <=1
     if (distance > 0 && distance <= distanceTable[0]) {
