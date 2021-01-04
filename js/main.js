@@ -15,6 +15,9 @@ var check = false;
 // Kiểm tra tính tiền 
 // END GLOBAL VARIABLES 
 
+function getEle(id) {
+    return document.getElementById(id);
+}
 function calculateMoney(distance, time, vehicle, indexVehicle) {
     var money = 0;
     // 0 < Số KM <= 1
@@ -55,9 +58,9 @@ function getMoney(car, distance, time) {
 
 function getCar() {
     var car = "";
-    var uber_X = document.getElementById("uberX");
-    var uber_SUV = document.getElementById("uberSUV");
-    var uber_Black = document.getElementById("uberBlack");
+    var uber_X = getEle("uberX");
+    var uber_SUV = getEle("uberSUV");
+    var uber_Black = getEle("uberBlack");
     if (uber_X.checked) {
         car = uber_X.value;
     } else if (uber_SUV.checked) {
@@ -68,14 +71,14 @@ function getCar() {
     return car;
 }
 
-document.getElementById("tinhTien").addEventListener("click", function () {
+getEle("tinhTien").addEventListener("click", function () {
     var car = getCar();
-    var distance = document.getElementById("distance").value;
-    var time = document.getElementById("time").value;
+    var distance = getEle("distance").value;
+    var time = getEle("time").value;
     // Set warning input
-    document.getElementById("warn-km").style.display = "none";
-    document.getElementById("warn-time").style.display = "none";
-    document.getElementById("divThanhTien").style.display = "none";
+    getEle("warn-km").style.display = "none";
+    getEle("warn-time").style.display = "none";
+    getEle("divThanhTien").style.display = "none";
     // Test input
     if (car == "") {
         alert("Vui lòng chọn loại xe");
@@ -90,30 +93,31 @@ document.getElementById("tinhTien").addEventListener("click", function () {
         return;
     }
     if (distance <= 0 && time < 0) {
-        document.getElementById("warn-km").style.display = "block";
-        document.getElementById("warn-time").style.display = "block";
+        getEle("warn-km").style.display = "block";
+        getEle("warn-time").style.display = "block";
         return;
     }
     else if (distance <= 0) {
-        document.getElementById("warn-km").style.display = "block";
+        getEle("warn-km").style.display = "block";
         return;
     }
     else if (time < 0) {
-        document.getElementById("warn-time").style.display = "block";
+        getEle("warn-time").style.display = "block";
         return;
     }
     // END Test input
     check = true; // Đã tính tiền
+
     var money = getMoney(car, distance, time);
-    document.getElementById("divThanhTien").style.display = "block";
-    document.getElementById("xuatTien").innerHTML = money;
+    getEle("divThanhTien").style.display = "block";
+    getEle("xuatTien").innerHTML = money;
 });
 
 function getBill(distance, time, money, vehicle, indexVehicle) {
     // In số tiền quãng đường đi được
     // 0 < Số KM <=1
     if (distance > 0 && distance <= distanceTable[0]) {
-        document.getElementById("line_1").style.display = "table-row";
+        getEle("line_1").style.display = "table-row";
         var getLine = document.querySelectorAll("#bill table #line_1 td");
         getLine[0].innerHTML = ubers[0];
         getLine[1].innerHTML = distance + " km";
@@ -122,14 +126,14 @@ function getBill(distance, time, money, vehicle, indexVehicle) {
     }
     // 1 < Số KM <= 20
     else if (distance > distanceTable[0] && distance <= distanceTable[1]) {
-        document.getElementById("line_1").style.display = "table-row";
+        getEle("line_1").style.display = "table-row";
         var getLine = document.querySelectorAll("#bill table #line_1 td");
         getLine[0].innerHTML = ubers[0];
         getLine[1].innerHTML = distanceTable[0] + " km";
         getLine[2].innerHTML = vehicle[0];
         getLine[3].innerHTML = distanceTable[0] * vehicle[0];
 
-        document.getElementById("line_2").style.display = "table-row";
+        getEle("line_2").style.display = "table-row";
         var getLine = document.querySelectorAll("#bill table #line_2 td");
         getLine[0].innerHTML = ubers[0];
         getLine[1].innerHTML = distance - distanceTable[0] + " km";
@@ -138,21 +142,21 @@ function getBill(distance, time, money, vehicle, indexVehicle) {
     }
     // Số KM > 20
     else {
-        document.getElementById("line_1").style.display = "table-row";
+        getEle("line_1").style.display = "table-row";
         var getLine = document.querySelectorAll("#bill table #line_1 td");
         getLine[0].innerHTML = ubers[0];
         getLine[1].innerHTML = distanceTable[0] + " km";
         getLine[2].innerHTML = vehicle[0];
         getLine[3].innerHTML = distanceTable[0] * vehicle[0];
 
-        document.getElementById("line_2").style.display = "table-row";
+        getEle("line_2").style.display = "table-row";
         var getLine = document.querySelectorAll("#bill table #line_2 td");
         getLine[0].innerHTML = ubers[0];
         getLine[1].innerHTML = distanceTable[1] - distanceTable[0] + " km";
         getLine[2].innerHTML = vehicle[1];
         getLine[3].innerHTML = (distanceTable[1] - distanceTable[0]) * vehicle[1];
 
-        document.getElementById("line_3").style.display = "table-row";
+        getEle("line_3").style.display = "table-row";
         var getLine = document.querySelectorAll("#bill table #line_3 td");
         getLine[0].innerHTML = ubers[0];
         getLine[1].innerHTML = distance - distanceTable[1] + " km";
@@ -161,7 +165,7 @@ function getBill(distance, time, money, vehicle, indexVehicle) {
     }
 
     // In số tiền khoảng thời gian chờ
-    document.getElementById("line_4").style.display = "table-row";
+    getEle("line_4").style.display = "table-row";
     var getTimeBill = document.querySelectorAll("#bill table #line_4 td");
     getTimeBill[0].innerHTML = "Thời gian chờ";
     getTimeBill[1].innerHTML = time + " phút";
@@ -169,26 +173,26 @@ function getBill(distance, time, money, vehicle, indexVehicle) {
     getTimeBill[3].innerHTML = time * pricePerTimeDelay[indexVehicle];
 
     // In tổng tiền
-    document.getElementById("line_5").style.display = "table-row";
+    getEle("line_5").style.display = "table-row";
     var getTotalBill = document.querySelectorAll("#bill table #line_5 td");
     getTotalBill[0].innerHTML = "Total";
     getTotalBill[3].innerHTML = money;
 }
 
-document.getElementById("inHoaDon").addEventListener("click", function () {
+getEle("inHoaDon").addEventListener("click", function () {
     var car = getCar();
-    var distance = document.getElementById("distance").value;
-    var time = document.getElementById("time").value;
+    var distance = getEle("distance").value;
+    var time = getEle("time").value;
     var money = getMoney(car, distance, time);
     // Set warning input
-    document.getElementById("warn-km").style.display = "none";
-    document.getElementById("warn-time").style.display = "none";
+    getEle("warn-km").style.display = "none";
+    getEle("warn-time").style.display = "none";
     // SET line
-    document.getElementById("line_1").style.display = "none";
-    document.getElementById("line_2").style.display = "none";
-    document.getElementById("line_3").style.display = "none";
-    document.getElementById("line_4").style.display = "none";
-    document.getElementById("line_5").style.display = "none";
+    getEle("line_1").style.display = "none";
+    getEle("line_2").style.display = "none";
+    getEle("line_3").style.display = "none";
+    getEle("line_4").style.display = "none";
+    getEle("line_5").style.display = "none";
     // Test input
     if (!check) {
         alert("Vui lòng TÍNH TIỀN trước khi in hóa đơn");
