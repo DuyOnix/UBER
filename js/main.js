@@ -74,6 +74,7 @@ document.getElementById("tinhTien").addEventListener("click", function () {
     // Set warning input
     document.getElementById("warn-km").style.display = "none";
     document.getElementById("warn-time").style.display = "none";
+    document.getElementById("divThanhTien").style.display = "none";
     // Test input
     if (car == "") {
         alert("Vui lòng chọn loại xe");
